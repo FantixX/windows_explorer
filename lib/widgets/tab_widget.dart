@@ -33,8 +33,8 @@ class TabWidget extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 8, 5, 10),
                   child: Text(
-                    tab.path,
-                    overflow: TextOverflow.ellipsis,
+                    "${tab.path}\\",
+                    overflow: TextOverflow.clip,
                     maxLines: 1,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -43,6 +43,7 @@ class TabWidget extends ConsumerWidget {
                 ),
               ),
               InkWell(
+                  borderRadius: BorderRadius.circular(10),
                   child: const Icon(
                     Icons.close_rounded,
                     size: 16,

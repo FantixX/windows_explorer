@@ -22,8 +22,9 @@ class ExplorerTabView extends ConsumerWidget {
         );
       }).toList(),
       IconButton(
-          onPressed: () =>
-              ref.read(tabsProvider.notifier).addTab(ExplorerTab(path: "Home")),
+          onPressed: () => ref
+              .read(tabsProvider.notifier)
+              .addTab(ExplorerTab.defaultDirectory()),
           icon: const Icon(Icons.add))
     ]);
   }

@@ -19,7 +19,22 @@ final fileSystemServiceProvider = Provider<FileSystemService>((ref) {
   return FileSystemService();
 });
 
-final directoryContentsProvider =
-    FutureProvider.family<List<FileSystemEntity>, String>((ref, path) {
-  return ref.watch(fileSystemServiceProvider).dirContents(Directory(path));
+final currentPathProvider = Provider<String>((ref) {
+  return ref
+      .watch(tabsProvider)
+      .firstWhere((element) => element.isCurrent)
+      .path;
+});
+
+final currentDirectoryContentsProvider =
+    StreamProvider<List<FileSystemEntity>>((ref) async* {
+  try {
+    final Directory directory = Directory(ref.watch(currentPathProvider));
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      yield await ref.watch(fileSystemServiceProvider).dirContents(directory);
+    }
+  } catch (e) {
+    return;
+  }
 });

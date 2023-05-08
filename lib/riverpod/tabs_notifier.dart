@@ -5,12 +5,13 @@ import 'package:windows_explorer/models/explorer_tab.dart';
 class TabsNotifier extends Notifier<List<ExplorerTab>> {
   @override
   build() {
-    return [ExplorerTab(path: "Home", isCurrent: true)];
+    return [ExplorerTab(path: "C:", isCurrent: true)];
   }
 
   void addTab(ExplorerTab tab) {
     ExplorerTab addedTab = tab;
-    if (state.isEmpty) addedTab.isCurrent = true;
+    addedTab.isCurrent = true;
+    state = [...state]..forEach((element) => element.isCurrent = false);
     state = [...state, addedTab];
   }
 
@@ -34,5 +35,21 @@ class TabsNotifier extends Notifier<List<ExplorerTab>> {
     state = [...state]..forEach((element) => element.isCurrent = false);
     state = [...state]..firstWhere((element) => element == tab).isCurrent =
         true;
+  }
+
+  void setTabPath(String newPath) {
+    state = [...state]..firstWhere((element) => element.isCurrent).path =
+        newPath;
+  }
+
+  void pathUp() {
+    final currentTab = state.firstWhere((element) => element.isCurrent);
+    final currentPath = currentTab.path;
+    try {
+      final newPath = currentPath.substring(0, currentPath.lastIndexOf('\\'));
+      setTabPath(newPath);
+    } catch (e) {
+      return;
+    }
   }
 }
