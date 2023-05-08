@@ -13,7 +13,7 @@ class TabWidget extends ConsumerWidget {
     bool isCurrent = tab.isCurrent;
     return Card(
       color:
-          (isCurrent) ? Theme.of(context).colorScheme.tertiaryContainer : null,
+          (isCurrent) ? Theme.of(context).colorScheme.primaryContainer : null,
       //elevation: (isCurrent) ? 10 : null,
       child: InkWell(
         hoverColor: (isCurrent) ? Colors.transparent : null,
